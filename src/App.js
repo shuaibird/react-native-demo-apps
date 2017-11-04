@@ -1,12 +1,46 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { View } from 'react-native'
-import Header from './components/Header'
-import AlbumList from './components/AlbumList'
+import firebase from 'firebase'
+import { firebaseConfig } from './config'
+import { Button, Header, Spinner } from './components/common'
+import LoginForm from './components/LoginForm'
 
-const App = () =>
-    <View style={{ flex: 1 }}>
-        <Header text='Album' />
-        <AlbumList />
-    </View>
+class App extends Component {
+    state = {
+        loggedIn: null,
+    }
+
+    componentWillMount() {
+        firebase.initializeApp(firebaseConfig)
+        firebase.auth().onAuthStateChanged(user =>
+            this.setState({ loggedIn: Boolean(user) })
+        )
+    }
+
+    renderContent = () => {
+        switch (this.state.loggedIn) {
+            case true:
+                return (
+                    <Button onPress={() => firebase.auth().signOut()}>
+                        Log Out
+                    </Button>
+                )
+            case false:
+                return <LoginForm />
+            default:
+                return <Spinner />
+
+        }
+    }
+
+    render() {
+        return (
+            <View>
+                <Header text='Auth' />
+                {this.renderContent()}
+            </View>
+        )
+    }
+}
 
 export default App
