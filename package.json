@@ -10,7 +10,9 @@
     "axios": "^0.17.0",
     "firebase": "^4.6.1",
     "react": "16.0.0-beta.5",
-    "react-native": "0.49.5"
+    "react-native": "0.49.5",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2"
   },
   "devDependencies": {
     "babel-jest": "21.2.0",

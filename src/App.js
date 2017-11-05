@@ -1,46 +1,26 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { View } from 'react-native'
-import firebase from 'firebase'
-import { firebaseConfig } from './config'
-import { Button, Header, Spinner } from './components/common'
-import LoginForm from './components/LoginForm'
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+import reducers from './reducers'
+import { Header } from './components/common'
+import LibraryList from './components/LibraryList'
 
-class App extends Component {
-    state = {
-        loggedIn: null,
-    }
+const store = createStore(
+    reducers,
+    // eslint-disable-next-line
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+)
 
-    componentWillMount() {
-        firebase.initializeApp(firebaseConfig)
-        firebase.auth().onAuthStateChanged(user =>
-            this.setState({ loggedIn: Boolean(user) })
-        )
-    }
-
-    renderContent = () => {
-        switch (this.state.loggedIn) {
-            case true:
-                return (
-                    <Button onPress={() => firebase.auth().signOut()}>
-                        Log Out
-                    </Button>
-                )
-            case false:
-                return <LoginForm />
-            default:
-                return <Spinner />
-
-        }
-    }
-
-    render() {
-        return (
-            <View>
-                <Header text='Auth' />
-                {this.renderContent()}
+const App = () => {
+    return (
+        <Provider store={store}>
+            <View style={{ flex: 1 }}>
+                <Header text='Tech Stack' />
+                <LibraryList />
             </View>
-        )
-    }
+        </Provider>
+    )
 }
 
 export default App
