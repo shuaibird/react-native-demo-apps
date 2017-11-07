@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux'
-import libraries from './libraries'
-import selectedLibraryId from './selectedLibraryId'
+import auth from './auth'
+import employeeForm from './employeeForm'
+import employees from './employees'
 
 export default combineReducers({
-    libraries,
-    selectedLibraryId,
+    auth,
+    employeeForm,
+    employees,
 })

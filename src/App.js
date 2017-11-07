@@ -1,26 +1,22 @@
-import React from 'react'
-import { View } from 'react-native'
+import React, { Component } from 'react'
 import { Provider } from 'react-redux'
-import { createStore } from 'redux'
-import reducers from './reducers'
-import { Header } from './components/common'
-import LibraryList from './components/LibraryList'
+import firebase from 'firebase'
+import store from './store'
+import config from './config.json'
+import Router from './Router'
 
-const store = createStore(
-    reducers,
-    // eslint-disable-next-line
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-)
+class App extends Component {
+    componentWillMount() {
+        firebase.initializeApp(config.firebase)
+    }
 
-const App = () => {
-    return (
-        <Provider store={store}>
-            <View style={{ flex: 1 }}>
-                <Header text='Tech Stack' />
-                <LibraryList />
-            </View>
-        </Provider>
-    )
+    render() {
+        return (
+            <Provider store={store}>
+                <Router />
+            </Provider>
+        )
+    }
 }
 
 export default App

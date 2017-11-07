@@ -1,0 +1,5 @@
+export default [
+    'EMPLOYEE_UPDATE',
+    'EMPLOYEE_FORM_RESET',
+    'EMPLOYEES_FETCH_SUCCESS',
+]
